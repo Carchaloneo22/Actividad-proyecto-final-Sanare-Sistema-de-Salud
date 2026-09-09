@@ -1,0 +1,112 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String   @id @default(uuid())
+  email        String   @unique
+  password     String
+  firstName    String
+  lastName     String
+  phone        String?
+  dni          String?  @unique
+  role         UserRole @default(PATIENT)
+  isActive     Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  appointments Appointment[]
+
+  @@map("users")
+}
+
+enum UserRole {
+  PATIENT
+  DOCTOR
+  ADMIN
+}
+
+model Specialty {
+  id          String   @id @default(uuid())
+  name        String   @unique
+  description String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  doctors     Doctor[]
+
+  @@map("specialties")
+}
+
+model Doctor {
+  id            String        @id @default(uuid())
+  name          String
+  specialtyId   String
+  specialty     Specialty     @relation(fields: [specialtyId], references: [id])
+  hospital      String
+  email         String        @unique
+  phone         String?
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+  appointments  Appointment[]
+  availableSlots AvailableSlot[]
+
+  @@map("doctors")
+}
+
+model AvailableSlot {
+  id        String   @id @default(uuid())
+  doctorId  String
+  doctor    Doctor   @relation(fields: [doctorId], references: [id])
+  startTime DateTime
+  endTime   DateTime
+  isBooked  Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("available_slots")
+}
+
+model Appointment {
+  id              String            @id @default(uuid())
+  doctorId        String
+  doctor          Doctor            @relation(fields: [doctorId], references: [id])
+  userId          String?
+  user            User?             @relation(fields: [userId], references: [id])
+  patientName     String
+  patientEmail    String?
+  patientPhone    String
+  date            DateTime
+  status          AppointmentStatus @default(PENDING)
+  notes           String?
+  cancellationToken String?        @unique
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+
+  @@map("appointments")
+}
+
+enum AppointmentStatus {
+  PENDING
+  CONFIRMED
+  CANCELLED
+  COMPLETED
+}
+
+model WaitingList {
+  id           String   @id @default(uuid())
+  specialtyId  String
+  patientName  String
+  patientEmail String?
+  patientPhone String
+  createdAt    DateTime @default(now())
+  notified     Boolean  @default(false)
+
+  @@map("waiting_list")
+}

@@ -1,0 +1,52 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database
+  postgres:
+    image: postgres:16-alpine
+    container_name: saludpublica-db
+    restart: unless-stopped
+    ports:
+      - '5432:5432'
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: saludpublica
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - saludpublica-network
+
+  # Redis for caching and Bull queues
+  redis:
+    image: redis:7-alpine
+    container_name: saludpublica-redis
+    restart: unless-stopped
+    ports:
+      - '6379:6379'
+    volumes:
+      - redis_data:/data
+    networks:
+      - saludpublica-network
+
+  # Redis Commander (optional - for visualizing Redis)
+  redis-commander:
+    image: rediscommander/redis-commander:latest
+    container_name: saludpublica-redis-commander
+    restart: unless-stopped
+    ports:
+      - '8081:8081'
+    environment:
+      - REDIS_HOSTS=local:redis:6379
+    networks:
+      - saludpublica-network
+    depends_on:
+      - redis
+
+volumes:
+  postgres_data:
+  redis_data:
+
+networks:
+  saludpublica-network:
+    driver: bridge

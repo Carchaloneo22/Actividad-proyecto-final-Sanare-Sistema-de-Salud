@@ -1,0 +1,691 @@
+{
+	"info": {
+		"_postman_id": "salud-publica-connect-2024",
+		"name": "Salud Pública Connect - API",
+		"description": "Colección completa de endpoints de la API de Salud Pública Connect organizados por módulo",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"paciente@ejemplo.com\",\n  \"password\": \"password123\",\n  \"firstName\": \"Juan\",\n  \"lastName\": \"Pérez\",\n  \"phone\": \"1234567890\",\n  \"dni\": \"12345678\",\n  \"role\": \"PATIENT\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/auth/register",
+							"host": ["{{baseUrl}}"],
+							"path": ["auth", "register"]
+						},
+						"description": "Registrar un nuevo usuario en el sistema"
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"paciente@ejemplo.com\",\n  \"password\": \"password123\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/auth/login",
+							"host": ["{{baseUrl}}"],
+							"path": ["auth", "login"]
+						},
+						"description": "Iniciar sesión y obtener token JWT"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Profile",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/auth/profile",
+							"host": ["{{baseUrl}}"],
+							"path": ["auth", "profile"]
+						},
+						"description": "Obtener perfil del usuario autenticado"
+					},
+					"response": []
+				},
+				{
+					"name": "Debug Me",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/auth/debug/me",
+							"host": ["{{baseUrl}}"],
+							"path": ["auth", "debug", "me"]
+						},
+						"description": "Verificar datos del usuario en el token (Debug)"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Specialties",
+			"item": [
+				{
+					"name": "Get All Specialties",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/specialties",
+							"host": ["{{baseUrl}}"],
+							"path": ["specialties"]
+						},
+						"description": "Obtener todas las especialidades médicas"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Specialty by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/specialties/:id",
+							"host": ["{{baseUrl}}"],
+							"path": ["specialties", ":id"],
+							"variable": [
+								{
+									"key": "id",
+									"value": "",
+									"description": "ID de la especialidad"
+								}
+							]
+						},
+						"description": "Obtener una especialidad por su ID"
+					},
+					"response": []
+				},
+				{
+					"name": "Create Specialty",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Cardiología\",\n  \"description\": \"Especialidad enfocada en el corazón y sistema cardiovascular\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/specialties",
+							"host": ["{{baseUrl}}"],
+							"path": ["specialties"]
+						},
+						"description": "Crear una nueva especialidad"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Doctors",
+			"item": [
+				{
+					"name": "Get All Doctors",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/doctors",
+							"host": ["{{baseUrl}}"],
+							"path": ["doctors"]
+						},
+						"description": "Obtener todos los médicos"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Doctors by Specialty",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/doctors?specialtyId=:specialtyId",
+							"host": ["{{baseUrl}}"],
+							"path": ["doctors"],
+							"query": [
+								{
+									"key": "specialtyId",
+									"value": ":specialtyId",
+									"description": "ID de la especialidad"
+								}
+							]
+						},
+						"description": "Obtener médicos filtrados por especialidad"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Doctor by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/doctors/:id",
+							"host": ["{{baseUrl}}"],
+							"path": ["doctors", ":id"],
+							"variable": [
+								{
+									"key": "id",
+									"value": "",
+									"description": "ID del médico"
+								}
+							]
+						},
+						"description": "Obtener un médico por su ID"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Available Slots",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/doctors/:id/available-slots?date=2024-11-25",
+							"host": ["{{baseUrl}}"],
+							"path": ["doctors", ":id", "available-slots"],
+							"query": [
+								{
+									"key": "date",
+									"value": "2024-11-25",
+									"description": "Fecha en formato YYYY-MM-DD"
+								}
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "",
+									"description": "ID del médico"
+								}
+							]
+						},
+						"description": "Obtener horarios disponibles de un médico para una fecha específica"
+					},
+					"response": []
+				},
+				{
+					"name": "Create Doctor (Admin)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{adminToken}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Dr. Carlos García\",\n  \"specialtyId\": \"<specialty-id>\",\n  \"hospital\": \"Hospital Central\",\n  \"email\": \"carlos.garcia@hospital.com\",\n  \"phone\": \"1234567890\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/doctors",
+							"host": ["{{baseUrl}}"],
+							"path": ["doctors"]
+						},
+						"description": "Crear un nuevo médico (requiere rol ADMIN)"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Doctor (Admin)",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{adminToken}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Dr. Carlos García\",\n  \"phone\": \"0987654321\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/doctors/:id",
+							"host": ["{{baseUrl}}"],
+							"path": ["doctors", ":id"],
+							"variable": [
+								{
+									"key": "id",
+									"value": "",
+									"description": "ID del médico"
+								}
+							]
+						},
+						"description": "Actualizar datos de un médico (requiere rol ADMIN)"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Doctor (Admin)",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{adminToken}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/doctors/:id",
+							"host": ["{{baseUrl}}"],
+							"path": ["doctors", ":id"],
+							"variable": [
+								{
+									"key": "id",
+									"value": "",
+									"description": "ID del médico"
+								}
+							]
+						},
+						"description": "Eliminar un médico (requiere rol ADMIN)"
+					},
+					"response": []
+				},
+				{
+					"name": "Create Slot (Admin)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{adminToken}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"startTime\": \"2024-11-25T09:00:00.000Z\",\n  \"endTime\": \"2024-11-25T09:20:00.000Z\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/doctors/:id/slots",
+							"host": ["{{baseUrl}}"],
+							"path": ["doctors", ":id", "slots"],
+							"variable": [
+								{
+									"key": "id",
+									"value": "",
+									"description": "ID del médico"
+								}
+							]
+						},
+						"description": "Crear un slot de 20 minutos manualmente (requiere rol ADMIN)"
+					},
+					"response": []
+				},
+				{
+					"name": "Generate Slots (Admin)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{adminToken}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"daysOfWeek\": [1, 2, 3, 4, 5],\n  \"startHour\": 9,\n  \"endHour\": 17,\n  \"weeksAhead\": 4\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/doctors/:id/slots/generate",
+							"host": ["{{baseUrl}}"],
+							"path": ["doctors", ":id", "slots", "generate"],
+							"variable": [
+								{
+									"key": "id",
+									"value": "",
+									"description": "ID del médico"
+								}
+							]
+						},
+						"description": "Generar slots automáticamente para varias semanas (requiere rol ADMIN). daysOfWeek: 0=Domingo, 1=Lunes, ..., 6=Sábado"
+					},
+					"response": []
+				},
+				{
+					"name": "Clear All Slots (Admin)",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{adminToken}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/doctors/:id/slots",
+							"host": ["{{baseUrl}}"],
+							"path": ["doctors", ":id", "slots"],
+							"variable": [
+								{
+									"key": "id",
+									"value": "",
+									"description": "ID del médico"
+								}
+							]
+						},
+						"description": "Eliminar todos los slots no reservados de un médico (requiere rol ADMIN)"
+					},
+					"response": []
+				},
+				{
+					"name": "Remove Duplicate Slots (Admin)",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{adminToken}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/doctors/:id/slots/duplicates",
+							"host": ["{{baseUrl}}"],
+							"path": ["doctors", ":id", "slots", "duplicates"],
+							"variable": [
+								{
+									"key": "id",
+									"value": "",
+									"description": "ID del médico"
+								}
+							]
+						},
+						"description": "Eliminar slots duplicados para un médico específico (requiere rol ADMIN)"
+					},
+					"response": []
+				},
+				{
+					"name": "Remove All Duplicates (Admin)",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{adminToken}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/doctors/all/duplicates",
+							"host": ["{{baseUrl}}"],
+							"path": ["doctors", "all", "duplicates"]
+						},
+						"description": "Eliminar slots duplicados para TODOS los médicos (requiere rol ADMIN)"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Appointments",
+			"item": [
+				{
+					"name": "Get All Appointments",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/appointments",
+							"host": ["{{baseUrl}}"],
+							"path": ["appointments"]
+						},
+						"description": "Obtener todos los turnos (requiere autenticación)"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Appointments by Status",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/appointments?status=CONFIRMED",
+							"host": ["{{baseUrl}}"],
+							"path": ["appointments"],
+							"query": [
+								{
+									"key": "status",
+									"value": "CONFIRMED",
+									"description": "PENDING, CONFIRMED, CANCELLED, COMPLETED"
+								}
+							]
+						},
+						"description": "Obtener turnos filtrados por estado"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Appointment by ID",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/appointments/:id",
+							"host": ["{{baseUrl}}"],
+							"path": ["appointments", ":id"],
+							"variable": [
+								{
+									"key": "id",
+									"value": "",
+									"description": "ID del turno"
+								}
+							]
+						},
+						"description": "Obtener un turno por su ID"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Appointment Stats (Admin)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{adminToken}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/appointments/stats",
+							"host": ["{{baseUrl}}"],
+							"path": ["appointments", "stats"]
+						},
+						"description": "Obtener estadísticas de turnos (requiere rol ADMIN)"
+					},
+					"response": []
+				},
+				{
+					"name": "Create Appointment (Patient)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"doctorId\": \"<doctor-id>\",\n  \"patientName\": \"Juan Pérez\",\n  \"patientPhone\": \"1234567890\",\n  \"patientEmail\": \"juan.perez@ejemplo.com\",\n  \"date\": \"2024-11-25T09:00:00.000Z\",\n  \"notes\": \"Dolor de cabeza persistente\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/appointments",
+							"host": ["{{baseUrl}}"],
+							"path": ["appointments"]
+						},
+						"description": "Crear un nuevo turno (requiere rol PATIENT)"
+					},
+					"response": []
+				},
+				{
+					"name": "Cancel Appointment",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/appointments/:id",
+							"host": ["{{baseUrl}}"],
+							"path": ["appointments", ":id"],
+							"variable": [
+								{
+									"key": "id",
+									"value": "",
+									"description": "ID del turno"
+								}
+							]
+						},
+						"description": "Cancelar un turno"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Appointments Public",
+			"item": [
+				{
+					"name": "Get Appointment by Token",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/appointments-public/token/:token",
+							"host": ["{{baseUrl}}"],
+							"path": ["appointments-public", "token", ":token"],
+							"variable": [
+								{
+									"key": "token",
+									"value": "",
+									"description": "Token de cancelación del turno"
+								}
+							]
+						},
+						"description": "Obtener detalles de un turno usando el token (no requiere autenticación)"
+					},
+					"response": []
+				},
+				{
+					"name": "Cancel Appointment by Token",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/appointments-public/cancel/:token",
+							"host": ["{{baseUrl}}"],
+							"path": ["appointments-public", "cancel", ":token"],
+							"variable": [
+								{
+									"key": "token",
+									"value": "",
+									"description": "Token de cancelación del turno"
+								}
+							]
+						},
+						"description": "Cancelar un turno usando el token (no requiere autenticación - usado desde email)"
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:3001",
+			"type": "string"
+		},
+		{
+			"key": "token",
+			"value": "",
+			"type": "string",
+			"description": "Token JWT del usuario autenticado (PATIENT)"
+		},
+		{
+			"key": "adminToken",
+			"value": "",
+			"type": "string",
+			"description": "Token JWT del usuario administrador (ADMIN)"
+		}
+	]
+}

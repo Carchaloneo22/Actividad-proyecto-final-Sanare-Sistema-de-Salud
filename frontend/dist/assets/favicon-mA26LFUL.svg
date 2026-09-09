@@ -1,0 +1,36 @@
+<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="valensCyanTeal" x1="4" y1="4" x2="44" y2="44" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stopColor="#06B6D4" />
+      <stop offset="50%" stopColor="#0EA5E9" />
+      <stop offset="100%" stopColor="#0D9488" />
+    </linearGradient>
+    <filter id="valensGlow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="2" stdDeviation="2" floodColor="#06B6D4" floodOpacity="0.3" />
+    </filter>
+  </defs>
+
+  <rect x="3" y="3" width="42" height="42" rx="12" fill="#0F172A" />
+
+  <path
+    d="M24 38C24 38 10 28.5 10 19C10 14.5 13.5 11 18 11C20.5 11 22.8 12.2 24 14C25.2 12.2 27.5 11 30 11C34.5 11 38 14.5 38 19C38 28.5 24 38 24 38Z"
+    stroke="url(#valensCyanTeal)"
+    stroke-width="2.75"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    fill="none"
+    filter="url(#valensGlow)"
+  />
+
+  <path
+    d="M13 22H18L20.5 16L23.5 28L26 19L28 24H35"
+    stroke="#38BDF8"
+    stroke-width="2.5"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+
+  <circle cx="13" cy="22" r="2.2" fill="#2DD4BF" />
+  <circle cx="35" cy="24" r="2.2" fill="#38BDF8" />
+  <circle cx="24" cy="38" r="2" fill="#0EA5E9" />
+</svg>
